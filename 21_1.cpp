@@ -374,6 +374,27 @@ bool detectCycle(Node *&head)
     return false;
 }
 
+void removeCycle(Node *&head)
+{
+    Node *fast = head;
+    Node *slow = head;
+
+    do
+    {
+        /* code */
+        fast = fast->Next->Next;
+        slow = slow->Next;
+    } while (slow != fast);
+    fast = head;
+    while (fast->Next != slow->Next)
+    {
+        fast = fast->Next;
+        slow = slow->Next;
+    }
+
+    slow->Next = NULL;
+}
+
 int main()
 {
     Node *head = NULL;
@@ -395,6 +416,7 @@ int main()
          << "Choice 15: Find Mid Element" << endl
          << "Choice 16: Make Cycle of a LL" << endl
          << "Choice 17: Detect a Cycle" << endl
+         << "Choice 18: Remove a Cycle" << endl
          << "Choice 0: Exit" << endl
          << endl;
     cout << "Next Choice: ";
@@ -530,6 +552,13 @@ int main()
             cycleStatus = detectCycle(head);
             if (cycleStatus)
                 cout << "There is a cycle in the LL!" << endl;
+            else
+                cout << "There is no cycle in the LL!" << endl;
+            break;
+        case 18:
+            cycleStatus = detectCycle(head);
+            if (cycleStatus)
+                removeCycle(head);
             else
                 cout << "There is no cycle in the LL!" << endl;
             break;
