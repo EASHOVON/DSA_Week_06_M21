@@ -344,6 +344,36 @@ int findMid(Node *&head)
     return slow->value;
 }
 
+void makeCycle(Node *&head, int pos)
+{
+    Node *temp = head;
+    Node *startNode;
+    int count = 1;
+    while (temp->Next != NULL)
+    {
+        if (pos == count)
+            startNode = temp;
+        temp = temp->Next;
+        count++;
+    }
+    temp->Next = startNode;
+}
+
+bool detectCycle(Node *&head)
+{
+    Node *fast = head;
+    Node *slow = head;
+    while (fast != NULL && fast->Next != NULL)
+    {
+        fast = fast->Next->Next;
+        slow = slow->Next;
+
+        if (slow->Next == fast->Next)
+            return true;
+    }
+    return false;
+}
+
 int main()
 {
     Node *head = NULL;
@@ -363,6 +393,8 @@ int main()
          << "Choice 13: Reversal of List Non-Recursive" << endl
          << "Choice 14: Reversal of List Recursive" << endl
          << "Choice 15: Find Mid Element" << endl
+         << "Choice 16: Make Cycle of a LL" << endl
+         << "Choice 17: Detect a Cycle" << endl
          << "Choice 0: Exit" << endl
          << endl;
     cout << "Next Choice: ";
@@ -488,6 +520,19 @@ int main()
             }
             break;
 
+        case 16:
+            cout << "Enter a Desired Position: ";
+            cin >> position;
+            makeCycle(head, position);
+            break;
+        case 17:
+            bool cycleStatus;
+            cycleStatus = detectCycle(head);
+            if (cycleStatus)
+                cout << "There is a cycle in the LL!" << endl;
+            else
+                cout << "There is no cycle in the LL!" << endl;
+            break;
         default:
             break;
         }
